@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facebook</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+body{background:#f0f2f5;}
+
+/* NAVBAR */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px;background:#fff;
+  box-shadow:0 1px 2px rgba(0,0,0,0.1);
+  position:sticky;top:0;z-index:1000;
+}
+.logo{color:#1877f2;font-size:28px;font-weight:bold;}
+.search{background:#f0f2f5;padding:8px 12px;border-radius:20px;}
+.search input{border:none;background:transparent;outline:none;}
+.nav-icons span{margin:0 15px;font-size:22px;cursor:pointer;padding:8px;border-radius:10px;}
+.nav-icons span.active{background:#e7f3ff;color:#1877f2;}
+.nav-icons span:hover{background:#f0f2f5;}
+
+
+.multi-img {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.multi-img img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* LAYOUT */
+.container{display:flex;justify-content:center;padding:20px;gap:20px;}
+.left,.right{width:280px;}
+.feed{width:500px;}
+
+.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:15px;box-shadow:0 1px 2px rgba(0,0,0,0.08);} 
+
+/* SIDEBAR */
+.menu-item{display:flex;align-items:center;padding:10px;border-radius:8px;cursor:pointer;gap:10px;}
+.menu-item:hover{background:#e4e6eb;}
+.avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;}
+
+.left a{
+    background: white;
+    color: blue;
+    text-decoration-line: none;
+}
+
+/* STORIES */
+.stories{display:flex;gap:8px;margin-bottom:15px;overflow-x:auto;}
+.story{
+  min-width:110px;height:190px;border-radius:12px;overflow:hidden;
+  position:relative;cursor:pointer;
+}
+.story img{width:100%;height:100%;object-fit:cover;}
+.story span{position:absolute;bottom:8px;left:8px;color:#fff;font-weight:bold;font-size:14px;}
+
+/* POST BOX */
+.post-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.post-top input{flex:1;padding:10px;border-radius:20px;border:none;background:#f0f2f5;}
+.post-actions{display:flex;justify-content:space-around;border-top:1px solid #ddd;padding-top:10px;}
+.post-actions div{cursor:pointer;padding:6px;border-radius:6px;}
+.post-actions div:hover{background:#f0f2f5;}
+
+/* POSTS */
+.post-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.post img{width:100%;border-radius:10px;margin-top:10px;}
+.post-footer{display:flex;justify-content:space-around;border-top:1px solid #ddd;margin-top:10px;padding-top:8px;}
+.post-footer div{cursor:pointer;padding:6px;border-radius:6px;}
+.post-footer div:hover{background:#f0f2f5;}
+
+/* 1 IMAGE */
+.img-1 img{
+  width:100%;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+/* 2 IMAGES */
+.img-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  margin-top:10px;
+}
+.img-2 img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* 3 IMAGES */
+.img-3{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:5px;
+  margin-top:10px;
+}
+.img-3 .big{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:10px;
+}
+.img-3 .side{
+  display:grid;
+  grid-template-rows:1fr 1fr;
+  gap:5px;
+}
+.img-3 .side img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* 4+ IMAGES */
+.img-4{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  margin-top:10px;
+}
+.img-4 img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.comment-section{
+  margin-top:10px;
+}
+
+.comment{
+  background:#f0f2f5;
+  padding:6px 10px;
+  border-radius:10px;
+  margin-top:5px;
+  font-size:14px;
+}
+
+.comment-section input{
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:20px;
+  background:#f0f2f5;
+  margin-top:5px;
+  outline:none;
+}
+
+/* CHAT */
+.chat-box{height:300px;overflow-y:auto;background:#fff;padding:10px;border-radius:10px;}
+.msg{font-size:14px;margin-bottom:5px;}
+
+@media(max-width:1000px){.left,.right{display:none}.feed{width:100%}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="logo">facebook</div>
+  <div class="search"><input placeholder="Search Facebook"></div>
+  <div class="nav-icons">
+    <span class="active">🏠</span>
+    <span>👥</span>
+    <span>🎥</span>
+    <span>🛒</span>
+    <span>🔔</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- LEFT -->
+<div class="left">
+  <div class="card">
+    <div class="menu-item">
+  <img src="./logo.png" class="avatar" alt=""> <a href="https://www.saventurebiz.com/">Saventure InfraTech</a>
+  
+    </div>
+    <div class="menu-item">👥 Friends</div>
+    <div class="menu-item">🕒 Memories</div>
+    <div class="menu-item">📌 Saved</div>
+    <div class="menu-item">👨‍👩‍👧 Groups</div>
+  </div>
+</div>
+
+<!-- FEED -->
+<div class="feed">
+
+<!-- STORIES -->
+<div class="stories">
+  <div class="story"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"><span>Latha</span></div>
+  <div class="story"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d"><span>Lokesh</span></div>
+  <div class="story"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1"><span>Nandini</span></div>
+</div>
+
+<!-- CREATE POST -->
+<div class="card">
+  <div class="post-top">
+    <div class="avatar"></div>
+    <input id="postInput" placeholder="What's on your mind, viewers?">
+  </div>
+  <input type="file" id="imageInput" multiple><br><br>
+  <button onclick="addPost()">Post</button>
+  <div class="post-actions">
+    <div>🎥 Live</div>
+    <div>📸 Photo</div>
+    <div>😊 Feeling</div>
+  </div>
+</div>
+
+<div id="posts"></div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <div class="card">
+    <h4>Contacts</h4>
+    Lokesh<br>Latha<br>Nandini
+  </div>
+
+  <div class="card">
+    <h4>Messenger</h4>
+    <div id="chat" class="chat-box"></div>
+    <input id="chatInput" placeholder="Type message..." onkeypress="sendMsg(event)">
+  </div>
+</div>
+
+</div>
+
+<script>
+let currentUser = 'Saventure';
+let posts = []; // 🔥 no localStorage (clears on refresh)
+
+function addPost(){
+  const text = postInput.value;
+  const files = imageInput.files;
+
+  if(!text && files.length === 0) return;
+
+  let images = [];
+  let loaded = 0;
+
+  if(files.length > 0){
+    for(let i = 0; i < files.length; i++){
+      const reader = new FileReader();
+      reader.onload = function(e){
+        images.push(e.target.result);
+        loaded++;
+
+        if(loaded === files.length){
+          savePost(text, images);
+        }
+      }
+      reader.readAsDataURL(files[i]);
+    }
+  } else {
+    savePost(text, []);
+  }
+}
+
+function savePost(text, images){
+posts.unshift({
+  user: currentUser,
+  text: text,
+  images: images,
+  likes: 0,
+  comments: []   // ✅ ADD THIS
+});
+
+  postInput.value = '';
+  imageInput.value = '';
+
+  loadPosts();
+}
+
+function loadPosts(){
+  const container = document.getElementById('posts');
+  container.innerHTML = '';
+
+  posts.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'card post';
+
+let imagesHTML = '';
+
+if(p.images.length > 0){
+
+  if(p.images.length === 1){
+    imagesHTML = `<div class="img-1">
+      <img src="${p.images[0]}">
+    </div>`;
+  }
+
+  else if(p.images.length === 2){
+    imagesHTML = `<div class="img-2">
+      ${p.images.map(img => `<img src="${img}">`).join('')}
+    </div>`;
+  }
+
+  else if(p.images.length === 3){
+    imagesHTML = `
+    <div class="img-3">
+      <img src="${p.images[0]}" class="big">
+      <div class="side">
+        <img src="${p.images[1]}">
+        <img src="${p.images[2]}">
+      </div>
+    </div>`;
+  }
+
+  else {
+    imagesHTML = `<div class="img-4">
+      ${p.images.map(img => `<img src="${img}">`).join('')}
+    </div>`;
+  }
+}
+
+    div.innerHTML = `
+  <div class='post-header'>
+    <div class='avatar'></div>
+    <b>${p.user}</b>
+  </div>
+
+  <p>${p.text || ''}</p>
+
+  ${imagesHTML}
+
+  <div class='post-footer'>
+    <div onclick="like(${i})">👍 ${p.likes}</div>
+    <div>💬 Comment</div>
+    <div>↗ Share</div>
+  </div>
+
+  <!-- COMMENTS -->
+  <div class="comment-section">
+    <div id="comments-${i}">
+      ${p.comments.map(c => `<div class="comment"><b>${c.user}:</b> ${c.text}</div>`).join('')}
+    </div>
+
+    <input 
+      placeholder="Write a comment..." 
+      onkeypress="addComment(event, ${i})"
+    >
+  </div>
+`;
+    container.appendChild(div);
+  });
+}
+
+function like(i){
+  posts[i].likes++;
+  loadPosts();
+}
+
+/* CHAT (still temporary only) */
+function sendMsg(e){
+  if(e.key === 'Enter'){
+    const text = chatInput.value;
+    const chat = document.getElementById('chat');
+
+    const div = document.createElement('div');
+    div.className = 'msg';
+    div.innerHTML = `<b>${currentUser}:</b> ${text}`;
+
+    chat.appendChild(div);
+    chatInput.value = '';
+    chat.scrollTop = chat.scrollHeight;
+  }
+}
+
+function addComment(e, index){
+  if(e.key === 'Enter'){
+    const text = e.target.value;
+    if(!text) return;
+
+    posts[index].comments.push({
+      user: currentUser,
+      text: text
+    });
+
+    e.target.value = '';
+    loadPosts(); // refresh UI
+  }
+}
+</script>
+
+</body>
+</html>
